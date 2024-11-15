@@ -12,14 +12,14 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
 
     volumes:
-      - $HOME/.ssh:/home/devcontainer/.ssh
-      - $HOME/.config:/home/devcontainer/.config:cached
-      - $HOME/.profile:/home/devcontainer/.profile:cached
-      - local:/home/devcontainer/.local
-      - cache:/home/devcontainer/.cache
+      - $HOME/.ssh:/home/vscode/.ssh
+      - $HOME/.config:/home/vscode/.config:cached
+      - $HOME/.profile:/home/vscode/.profile:cached
+      - local:/home/vscode/.local
+      - cache:/home/vscode/.cache
 
       # project mounting
-      - ..:/home/devcontainer/${LOCAL_WORKSPACE_FOLDER}
+      - ..:/home/vscode/${LOCAL_WORKSPACE_FOLDER}
 
     environment:
       - TZ="Europe/Berlin"

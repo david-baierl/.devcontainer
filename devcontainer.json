@@ -7,16 +7,21 @@
 	"dockerComposeFile": [
 		"docker-compose.yml"
 	],
+	// "runArgs": [
+	// 	"--network=host",
+	// 	"--device=/dev/kvm"
+	// ],
 	// The 'service' property is the name of the service for the container that VS Code should
 	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
 	"service": "main",
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/home/devcontainer/${localWorkspaceFolderBasename}",
+	"workspaceFolder": "/home/vscode/${localWorkspaceFolderBasename}",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"rust-lang.rust-analyzer",
+				"tauri-apps.tauri-vscode",
 				"dustypomerleau.rust-syntax",
 				"yzhang.markdown-all-in-one",
 				"tamasfe.even-better-toml",
@@ -27,7 +32,7 @@
 	"initializeCommand": [
 		// "${localWorkspaceFolder}/.devcontainer/initialize.sh",
 		"./.devcontainer/initialize.sh"
-	]
+	],
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -41,5 +46,5 @@
 	// Configure tool-specific properties.
 	// "customizations": {},
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "devcontainer"
+	"remoteUser": "vscode"
 }
