@@ -13,8 +13,8 @@ services:
 
     volumes:
       - $HOME/.ssh:/home/vscode/.ssh
-      - $HOME/.config:/home/vscode/.config:cached
-      - $HOME/.profile:/home/vscode/.profile:cached
+      - $HOME/.config:/home/vscode/.config
+      - $HOME/.profile:/home/vscode/.profile
       - local:/home/vscode/.local
       - cache:/home/vscode/.cache
 

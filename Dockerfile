@@ -1,7 +1,7 @@
 FROM rust:1.80.1-bookworm
 USER root
 
-ENV RUNNING_IN_DOCKER=true
+ENV RUNNING_IN_DOCKER true
 
 ################################################
 # basics
@@ -17,8 +17,22 @@ RUN apt install -yq \
 ################################################
 
 RUN rustup update
-RUN rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+
+RUN rustup target add \
+    aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+
 RUN rustup component add rustfmt
+
+################################################
+# locals
+################################################
+
+RUN apt install -yq locales locales-all
+
+ENV LC_ALL en_US.UTF-8
+ENV LC_TYPE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
 ################################################
 # shell
@@ -35,18 +49,12 @@ RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
 SHELL ["fish", "-c"]
 ENV SHELL /usr/bin/fish
 
-# install fisher
-RUN curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-RUN fisher install jorgebucaran/nvm.fish
-
 ################################################
-# node
+# cleanup
 ################################################
 
-ENV NODE_VERSION=22.11.0
-ENV nvm_default_version=$NODE_VERSION
-
-RUN nvm install $NODE_VERSION && npm install --global pnpm
+# Clean up to reduce container size
+RUN apt clean && rm -rf /var/lib/apt/lists/*
 
 ################################################
 # user
@@ -67,3 +75,21 @@ RUN mkdir -p /home/$USERNAME/.cache && chown $USERNAME:$USERNAME /home/$USERNAME
 RUN mkdir -p /home/$USERNAME/.local && chown $USERNAME:$USERNAME /home/$USERNAME/.local
 
 USER $USERNAME
+
+# install fisher
+RUN curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+
+################################################
+# node
+################################################
+
+ENV NODE_VERSION 22.11.0
+
+# install nvm via fisher
+RUN fisher install jorgebucaran/nvm.fish
+
+RUN set --universal nvm_default_version $NODE_VERSION
+RUN set --universal nvm_default_packages pnpm
+
+RUN nvm install $NODE_VERSION
+RUN nvm use $NODE_VERSION && npm install --global pnpm
