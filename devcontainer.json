@@ -25,7 +25,9 @@
 				"dustypomerleau.rust-syntax",
 				"yzhang.markdown-all-in-one",
 				"tamasfe.even-better-toml",
-				"EditorConfig.EditorConfig"
+				"EditorConfig.EditorConfig",
+				"mike-co.import-sorter",
+				"dbaeumer.vscode-eslint"
 			]
 		}
 	},
